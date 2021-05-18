@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  AWSSecretsManagerSecretName:
+    Type: String
+    Default: "github-access-token"
+    Description: The name of the AWS Secrets Manager Secret that contains your GitHub Access Token
+Resources:
+  MyRepo:
+    Type: "EQ::MONITOR::NAGIOS"
+    Properties:
+      Name: "test-repo-from-cfn"
+      AccessToken: !Sub "{{resolve:secretsmanager:${AWSSecretsManagerSecretName}}}"
+Outputs:
+  SshUrl:
+    Value: !GetAtt MyRepo.SshUrl
+  HttpsUrl:
+    Value: !GetAtt MyRepo.HttpsUrl
+  FullName:
+    Value: !GetAtt MyRepo.Namespace

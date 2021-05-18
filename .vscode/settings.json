@@ -1,0 +1,10 @@
+{
+    "python.autoComplete.extraPaths": [
+        "./src/eq_monitor_nagios",
+        "./build/cloudformation_cli_python_lib"
+    ],
+    "python.analysis.extraPaths": [
+        "./src/eq_monitor_nagios",
+        "./build/cloudformation_cli_python_lib"
+    ]
+}

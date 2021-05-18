@@ -1,0 +1,21 @@
+{
+    "credentials": {
+        "accessKeyId": "",
+        "secretAccessKey": "",
+        "sessionToken": ""
+    },
+    "action": "DELETE",
+    "request": {
+        "clientRequestToken": "9910000",
+        "desiredResourceState": {
+            "Name": "MyNagiosServer",
+            "Id": "i-03ff69ab01a0eebec",
+            "SubnetId": "",
+            "SecurityGroupId": ""
+        },
+        "previousResourceState": null,
+        "logicalResourceIdentifier": "MyResource"
+    },
+    "callbackContext": null,
+    "region": "us-east-1"
+}
