@@ -4,12 +4,12 @@
         "secretAccessKey": "",
         "sessionToken": ""
     },
-    "action": "DELETE",
+    "action": "CREATE",
     "request": {
         "clientRequestToken": "9910000",
         "desiredResourceState": {
-            "Name": "MyNagiosServer",
-            "Id": "i-03ff69ab01a0eebec",
+            "Name": "",
+            "Id": "",
             "SubnetId": "",
             "SecurityGroupId": ""
         },
