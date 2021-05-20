@@ -31,7 +31,8 @@
   "handlers": {
     "create": {
       "permissions": [
-        "ec2:*"
+        "ec2:*",
+        "ssm:GetParameter"
       ]
     },
     "read": {

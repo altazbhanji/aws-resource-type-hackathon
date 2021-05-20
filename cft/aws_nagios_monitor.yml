@@ -1,19 +1,11 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Parameters:
-  AWSSecretsManagerSecretName:
-    Type: String
-    Default: "github-access-token"
-    Description: The name of the AWS Secrets Manager Secret that contains your GitHub Access Token
+
 Resources:
-  MyRepo:
+  Monitor:
     Type: "EQ::MONITOR::NAGIOS"
     Properties:
-      Name: "test-repo-from-cfn"
-      AccessToken: !Sub "{{resolve:secretsmanager:${AWSSecretsManagerSecretName}}}"
+      Name: "My Own Nagios Server"
+
 Outputs:
-  SshUrl:
-    Value: !GetAtt MyRepo.SshUrl
-  HttpsUrl:
-    Value: !GetAtt MyRepo.HttpsUrl
-  FullName:
-    Value: !GetAtt MyRepo.Namespace
+  InstanceId:
+    Value: !GetAtt Monitor.Id

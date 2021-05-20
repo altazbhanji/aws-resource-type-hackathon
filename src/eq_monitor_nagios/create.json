@@ -8,7 +8,7 @@
     "request": {
         "clientRequestToken": "9910000",
         "desiredResourceState": {
-            "Name": "",
+            "Name": "A Nagios Server",
             "Id": "",
             "SubnetId": "",
             "SecurityGroupId": ""
