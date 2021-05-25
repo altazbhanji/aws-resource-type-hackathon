@@ -127,5 +127,6 @@ dmypy.json
 sam-tests/
 
 rpdk.log*
-eq-monitor-nagios.zip
-eq-monitor-nagios.zip
+eq-monitor-nagios.zip*
+.eq-monitor-nagios.zip
+./eq-monitor-nagios.zip

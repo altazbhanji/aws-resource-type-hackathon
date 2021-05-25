@@ -32,16 +32,19 @@
     "create": {
       "permissions": [
         "ec2:*",
-        "ssm:GetParameter"
+        "ssm:GetParameter",
+        "ssm:PutParamter"
       ]
     },
     "read": {
       "permissions": [
+        "ssm:GetParameter"
       ]
     },
     "delete": {
       "permissions": [
-        "ec2:*"
+        "ec2:*",
+        "ssm:DeleteParameter"
       ]
     }
   }

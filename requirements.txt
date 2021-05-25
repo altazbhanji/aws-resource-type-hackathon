@@ -1,3 +1,2 @@
-cloudformation-cli-python-lib==2.1.5
-PyGithub==1.54.1
+cloudformation-cli-python-lib>=2.1.5
 ptvsd
