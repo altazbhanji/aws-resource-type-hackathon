@@ -212,6 +212,9 @@ def delete_handler(
     callback_context: MutableMapping[str, Any],
 ) -> ProgressEvent:
 
+    # TODO:
+    #   wait for server to terminate
+
     LOG.info("Starting delete_handler")
 
     ssm_client = session.client('ssm')
@@ -246,9 +249,6 @@ def read_handler(
     try:
         ssm_client.get_parameter(Name=ssm_name)
         model = request.desiredResourceState
-        instance_id = model.Id
-        ec2_client = session.client('ec2')
-        ec2_client.terminate_instances(InstanceIds=[instance_id])
         progress = ProgressEvent(status=OperationStatus.SUCCESS, resourceModel=model)
         LOG.info(f"Returning SUCCESS")
     except:

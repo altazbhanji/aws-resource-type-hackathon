@@ -28,23 +28,40 @@
   "primaryIdentifier": [
     "/properties/Id"
   ],
+  "additionalIdentifiers": [
+    [
+        "/properties/Name"
+    ]
+  ],  
   "handlers": {
     "create": {
       "permissions": [
         "ec2:*",
         "ssm:GetParameter",
-        "ssm:PutParamter"
+        "ssm:PutParamter",
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:PutMetricData",
+        "logs:PutLogEvents"
       ]
     },
     "read": {
       "permissions": [
-        "ssm:GetParameter"
+        "ssm:GetParameter",
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:PutMetricData",
+        "logs:PutLogEvents"
       ]
     },
     "delete": {
       "permissions": [
         "ec2:*",
-        "ssm:DeleteParameter"
+        "ssm:DeleteParameter",
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:PutMetricData",
+        "logs:PutLogEvents"
       ]
     }
   }
