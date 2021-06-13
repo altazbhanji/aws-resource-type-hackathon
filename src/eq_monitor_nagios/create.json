@@ -7,11 +7,11 @@
     "action": "CREATE",
     "request": {
         "clientRequestToken": "9910000",
+        "stackId": "0bd0bc49c3fb1d253",
         "desiredResourceState": {
             "Name": "A Nagios Server",
-            "Id": "",
-            "SubnetId": "",
-            "SecurityGroupId": ""
+            "SubnetId": "subnet-0bd0bc49c3fb1d253",
+            "SecurityGroupIds": ["sg-0f00adc83d20d240b"]
         },
         "previousResourceState": null,
         "logicalResourceIdentifier": "MyResource"

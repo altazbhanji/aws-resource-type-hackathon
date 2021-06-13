@@ -24,7 +24,24 @@ Resources:
               - Effect: Allow
                 Action:
                 - "ec2:*"
+                - "iam:AddRoleToInstanceProfile"
+                - "iam:AttachRolePolicy"
+                - "iam:CreateInstanceProfile"
+                - "iam:CreatePolicy"
+                - "iam:CreateRole"
+                - "iam:DeleteInstanceProfile"
+                - "iam:DeletePolicy"
+                - "iam:DeleteRole"
+                - "iam:DetachRolePolicy"
+                - "iam:PassRole"
+                - "iam:RemoveRoleFromInstanceProfile"
+                - "logs:CreateLogStream"
+                - "logs:DescribeLogGroups"
+                - "logs:PutLogEvents"
+                - "logs:PutMetricData"
+                - "ssm:DeleteParameter"
                 - "ssm:GetParameter"
+                - "ssm:PutParameter"
                 Resource: "*"
 Outputs:
   ExecutionRoleArn:

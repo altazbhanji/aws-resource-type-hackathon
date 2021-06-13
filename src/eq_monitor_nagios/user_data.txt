@@ -1,0 +1,39 @@
+#!/bin/bash -xe
+yum -y update
+yum install -y httpd php php-cli gcc unzip wget glibc glibc-common gd gd-devel net-snmp
+yum groupinstall -y "development tools"
+apachectl start
+useradd nagios
+echo nagios:Myn3wp55wd! | chpasswd
+groupadd nagcmd
+usermod -a -G nagcmd nagios
+usermod -a -G nagcmd apache
+
+cd /opt/
+wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.5.tar.gz
+tar xzf nagios-4.4.5.tar.gz
+cd nagios-4.4.5
+./configure --with-command-group=nagcmd
+make all
+make install
+make install-init
+make install-daemoninit
+make install-config
+make install-commandmode
+make install-exfoliation
+make install-webconf
+
+htpasswd -c -b /usr/local/nagios/etc/htpasswd.users nagiosadmin nagiosadmin
+
+service httpd restart
+
+cd /opt
+wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
+tar xzf nagios-plugins-2.2.1.tar.gz
+cd nagios-plugins-2.2.1
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+make install
+
+/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+service nagios start

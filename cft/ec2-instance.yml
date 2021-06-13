@@ -1,0 +1,92 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  ServerName:
+    Type: String
+    Description: Name of server
+    Default: MyServer
+
+  VPC:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC where server will be placed
+  
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet where server will be placed
+    Default: subnet-0bd0bc49c3fb1d253
+
+  AmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Description: Image Id
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+
+Resources:
+  Instance:
+    Type: AWS::EC2::Instance
+    CreationPolicy:
+      ResourceSignal:
+        Count: 1
+        Timeout: "PT15M"    
+    Properties:
+      SecurityGroupIds:
+        - !Ref SecurityGroup
+      SubnetId: !Ref SubnetId
+      ImageId: !Ref AmiId
+      UserData:
+        Fn::Base64: 
+          !Sub |
+          #!/bin/bash -xe
+          yum install -y gcc glibc glibc-common wget unzip httpd php gd gd-devel perl postfix
+          cd /tmp
+          wget -O nagioscore.tar.gz https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.5.tar.gz
+          tar xzf nagioscore.tar.gz
+          cd /tmp/nagioscore-nagios-4.4.5/
+          ./configure
+          make all
+          make install-groups-users
+          usermod -a -G nagios apache
+          make install
+          make install-daemoninit
+          chkconfig --level 2345 httpd on
+          systemctl enable httpd.service
+          make install-commandmode
+          make install-config
+          make install-webconf
+          htpasswd -c -b /usr/local/nagios/etc/htpasswd.users nagiosadmin nagiosadmin
+          cd /tmp
+          wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+          rpm -ihv epel-release-latest-7.noarch.rpm
+          yum install -y gcc glibc glibc-common make gettext automake autoconf wget openssl-devel net-snmp net-snmp-utils
+          yum install -y perl-Net-SNMP
+          cd /tmp
+          wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz
+          tar zxf nagios-plugins.tar.gz
+          cd /tmp/nagios-plugins-release-2.2.1/
+          ./tools/setup
+          ./configure
+          make
+          make install
+          systemctl restart httpd.service
+          systemctl restart nagios.service
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource Instance --region ${AWS::Region}
+
+      Tags:
+        - Key: Name
+          Value: !Ref ServerName
+      IamInstanceProfile: AB-EC2-for-SSM
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Nagios Security Group
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 443
+          ToPort: 443
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 80
+

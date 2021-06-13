@@ -5,12 +5,43 @@ Parameters:
     Type: String
     Description: Name of server
 
+  VPC:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC where server will be placed
+  
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet where server will be placed
+    Default: subnet-0bd0bc49c3fb1d253
+
 Resources:
   Monitor:
     Type: "EQ::MONITOR::NAGIOS"
     Properties:
       Name: !Ref ServerName
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds: 
+      - !Ref SecurityGroup
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Nagios Security Group
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 443
+          ToPort: 443
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 80
 
 Outputs:
   InstanceId:
     Value: !GetAtt Monitor.Id
+  ServerIP:
+    Value: !GetAtt Monitor.IP
+  URL:
+    Value: !GetAtt Monitor.URL

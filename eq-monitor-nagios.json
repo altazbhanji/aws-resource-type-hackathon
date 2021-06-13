@@ -10,39 +10,72 @@
       "type": "string",
       "description": "Instance Id of the nagios server."
     },
+    "IP": {
+      "type": "string",
+      "description": "IP of the nagios server."
+    },
+    "URL": {
+      "type": "string",
+      "description": "IP of the nagios server."
+    },
     "SubnetId": {
       "type": "string",
       "description": "Subnet Id where server is deployed. If not specified uses default VPC and default subnet, which must exist."
     },
-    "SecurityGroupId": {
+    "SecurityGroupIds": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "string"
+      }
+    },
+    "Role": {
       "type": "string",
-      "description": "Security group attached to Nagios server. If using SecurityGroup, SubnetId is required."
+      "description": "Name of the server Role"  
+    },
+    "PolicyArn": {
+      "type": "string",
+      "description": "ARN of the server Policy"  
+    },
+    "InstanceProfile": {
+      "type": "string",
+      "description": "Name of the instance profile"  
     }
   },
   "additionalProperties": false,
   "required": [
+    "SubnetId"
   ],
   "readOnlyProperties": [
-    "/properties/Id"
+    "/properties/Id",
+    "/properties/IP",
+    "/properties/URL",
+    "/properties/Role",
+    "/properties/PolicyArn",
+    "/properties/InstanceProfile"
   ],
   "primaryIdentifier": [
     "/properties/Id"
   ],
-  "additionalIdentifiers": [
-    [
-        "/properties/Name"
-    ]
-  ],  
+  "createOnlyProperties": [
+    "/properties/SubnetId"
+  ],    
   "handlers": {
     "create": {
       "permissions": [
         "ec2:*",
         "ssm:GetParameter",
-        "ssm:PutParamter",
+        "ssm:PutParameter",
         "logs:CreateLogStream",
         "logs:DescribeLogGroups",
         "logs:PutMetricData",
-        "logs:PutLogEvents"
+        "logs:PutLogEvents",
+        "iam:CreateRole",
+        "iam:CreatePolicy",
+        "iam:AttachRolePolicy",
+        "iam:CreateInstanceProfile",
+        "iam:AddRoleToInstanceProfile",
+        "iam:PassRole"
       ]
     },
     "read": {
@@ -61,8 +94,25 @@
         "logs:CreateLogStream",
         "logs:DescribeLogGroups",
         "logs:PutMetricData",
-        "logs:PutLogEvents"
+        "logs:PutLogEvents",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:DeleteInstanceProfile",
+        "iam:DetachRolePolicy",
+        "iam:DeletePolicy",
+        "iam:DeleteRole"
       ]
+    },
+    "update": {
+        "permissions": [
+          "ec2:*",
+          "logs:CreateLogStream",
+          "logs:DescribeLogGroups",
+          "logs:PutMetricData",
+          "logs:PutLogEvents"
+        ]
+    },
+    "list": {
+        "permissions": []
     }
   }
 }

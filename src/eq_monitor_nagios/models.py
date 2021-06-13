@@ -41,8 +41,13 @@ class ResourceHandlerRequest(BaseResourceHandlerRequest):
 class ResourceModel(BaseModel):
     Name: Optional[str]
     Id: Optional[str]
+    IP: Optional[str]
+    URL: Optional[str]
     SubnetId: Optional[str]
-    SecurityGroupId: Optional[str]
+    SecurityGroupIds: Optional[Sequence[str]]
+    Role: Optional[str]
+    PolicyArn: Optional[str]
+    InstanceProfile: Optional[str]
 
     @classmethod
     def _deserialize(
@@ -56,8 +61,13 @@ class ResourceModel(BaseModel):
         return cls(
             Name=json_data.get("Name"),
             Id=json_data.get("Id"),
+            IP=json_data.get("IP"),
+            URL=json_data.get("URL"),
             SubnetId=json_data.get("SubnetId"),
-            SecurityGroupId=json_data.get("SecurityGroupId"),
+            SecurityGroupIds=json_data.get("SecurityGroupIds"),
+            Role=json_data.get("Role"),
+            PolicyArn=json_data.get("PolicyArn"),
+            InstanceProfile=json_data.get("InstanceProfile"),
         )
 
 
