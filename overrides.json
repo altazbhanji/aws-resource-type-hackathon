@@ -1,0 +1,7 @@
+{
+    "CREATE": {
+      "/Name": "A Nagios Server",
+      "/SubnetId": "subnet-0bd0bc49c3fb1d253",
+      "/SecurityGroupIds": ["sg-0f00adc83d20d240b"]
+    }
+  }
