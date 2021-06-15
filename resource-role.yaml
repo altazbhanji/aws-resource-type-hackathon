@@ -41,6 +41,7 @@ Resources:
                 - "logs:PutMetricData"
                 - "ssm:DeleteParameter"
                 - "ssm:GetParameter"
+                - "ssm:GetParametersByPath"
                 - "ssm:PutParameter"
                 Resource: "*"
 Outputs:

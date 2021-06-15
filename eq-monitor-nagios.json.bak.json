@@ -18,6 +18,17 @@
       "type": "string",
       "description": "IP of the nagios server."
     },
+    "SubnetId": {
+      "type": "string",
+      "description": "Subnet Id where server is deployed. If not specified uses default VPC and default subnet, which must exist."
+    },
+    "SecurityGroupIds": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "string"
+      }
+    },
     "Role": {
       "type": "string",
       "description": "Name of the server Role"  
@@ -29,24 +40,11 @@
     "InstanceProfile": {
       "type": "string",
       "description": "Name of the instance profile"  
-    },
-    "SubnetId": {
-      "type": "string",
-      "description": "Subnet where instance is deployed"  
-    },
-    "SecurityGroupId": {
-      "type": "string",
-      "description": "Security group id"  
     }
   },
   "additionalProperties": false,
   "required": [
-    "SubnetId",
-    "SecurityGroupId"
-  ],
-  "createOnlyProperties": [
-    "/properties/SubnetId",
-    "/properties/SecurityGroupId"
+    "SubnetId"
   ],
   "readOnlyProperties": [
     "/properties/Id",
@@ -59,6 +57,9 @@
   "primaryIdentifier": [
     "/properties/Id"
   ],
+  "createOnlyProperties": [
+    "/properties/SubnetId"
+  ],    
   "handlers": {
     "create": {
       "permissions": [
@@ -111,9 +112,7 @@
         ]
     },
     "list": {
-        "permissions": [
-          "ssm:GetParametersByPath"
-          ]
+        "permissions": []
     }
   }
 }

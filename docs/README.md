@@ -14,7 +14,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
     "Properties" : {
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#subnetid" title="SubnetId">SubnetId</a>" : <i>String</i>,
-        "<a href="#securitygroupids" title="SecurityGroupIds">SecurityGroupIds</a>" : <i>[ String, ... ]</i>,
+        "<a href="#securitygroupid" title="SecurityGroupId">SecurityGroupId</a>" : <i>String</i>
     }
 }
 </pre>
@@ -26,8 +26,7 @@ Type: EQ::MONITOR::NAGIOS
 Properties:
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#subnetid" title="SubnetId">SubnetId</a>: <i>String</i>
-    <a href="#securitygroupids" title="SecurityGroupIds">SecurityGroupIds</a>: <i>
-      - String</i>
+    <a href="#securitygroupid" title="SecurityGroupId">SecurityGroupId</a>: <i>String</i>
 </pre>
 
 ## Properties
@@ -44,7 +43,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### SubnetId
 
-Subnet Id where server is deployed. If not specified uses default VPC and default subnet, which must exist.
+Subnet where instance is deployed
 
 _Required_: Yes
 
@@ -52,13 +51,15 @@ _Type_: String
 
 _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
-#### SecurityGroupIds
+#### SecurityGroupId
 
-_Required_: No
+Security group id
 
-_Type_: List of String
+_Required_: Yes
 
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+_Type_: String
+
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
 ## Return Values
 

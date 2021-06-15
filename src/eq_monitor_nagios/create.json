@@ -7,15 +7,22 @@
     "action": "CREATE",
     "request": {
         "clientRequestToken": "9910000",
-        "stackId": "0bd0bc49c3fb1d253",
         "desiredResourceState": {
             "Name": "A Nagios Server",
             "SubnetId": "subnet-0bd0bc49c3fb1d253",
-            "SecurityGroupIds": ["sg-0f00adc83d20d240b"]
+            "SecurityGroupId": "sg-0f00adc83d20d240b"
         },
         "previousResourceState": null,
         "logicalResourceIdentifier": "MyResource"
     },
-    "callbackContext": null,
+    "callbackContext": {
+        "role": "nagios_role_67d1793c_1732_40a1_a306_7edc77627e4f",
+        "policy_arn": "arn:aws:iam::566241887797:policy/nagios_policy_67d1793c_1732_40a1_a306_7edc77627e4f",
+        "instance_profile": "nagios_instance_profile_67d1793c_1732_40a1_a306_7edc77627e4f",
+        "subnet_id": "subnet-0bd0bc49c3fb1d253",
+        "server_name": "A Nagios Server",
+        "security_groups": "sg-0f00adc83d20d240b"
+    },
     "region": "us-east-1"
 }
+
